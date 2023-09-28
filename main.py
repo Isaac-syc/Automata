@@ -7,6 +7,7 @@ class main:
    
    DFA = ""
    response = ""
+   transitions = [] 
 
    def run(self,GUI):
       
@@ -14,13 +15,19 @@ class main:
       
       
       if self.verifyDfa(self.DFA, sql):
-         self.response = "La sentencia: '"+sql+"' es aceptada "
+         self.response = "La cadena: '"+sql+"' es aceptada "
       else:
-         self.response = "La sentencia: '"+sql+"' es rechazada"
+         self.response = "La cadena: '"+sql+"' es rechazada"
       
       
       GUI.list_result.clear()
       GUI.list_result.addItem(str(self.response))
+      print("Transiciones realizadas:")
+      for transition in self.transitions:
+         print(f"{transition[0]} -> {transition[1]} -> {transition[2]}")
+         
+      transitions_text = "\n".join([f"{transition[0]} -> {transition[1]} -> {transition[2]}" for transition in main.transitions])
+      GUI.transitionsBrowser.setPlainText(transitions_text)
 
       
    def loadAutomata(self,filename):
@@ -52,7 +59,9 @@ class main:
       try:
          assert(a in D["Sigma"])
          assert(q in D["Q"])
-         return D["Delta"][(q,a)]
+         next_state = D["Delta"][(q, a)]
+         self.transitions.append((q, a, next_state))
+         return next_state
       except:
          return False
      
