@@ -12,8 +12,7 @@ class main:
    def run(self,GUI):
       
       sql = GUI.entrySql.text()
-      
-      
+      self.transitions = []
       if self.verifyDfa(self.DFA, sql):
          self.response = "La cadena: '"+sql+"' es aceptada "
       else:
