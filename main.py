@@ -44,6 +44,7 @@ class main:
    
    
    def initDfa(self,D,w):
+      print(D)
       curstate = D["q0"]
       if w == "":
          return curstate
